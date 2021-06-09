@@ -39,7 +39,7 @@ class ClicakbleCircle:
             'button_release_event', self.on_release)
 
     def on_release(self, event):
-        if not self.clicked_in:
+        if not (self.clicked_in and self.circ.get_visible()):
             return
         contains, _ = self.circ.contains(event)
         if contains:
@@ -73,6 +73,13 @@ class EditCircle(ClicakbleCircle):
             self.column.remove_circle()
 
 
+def start_game(self):
+    for col in cols:
+        col.add.circ.set_visible(not col.add.circ.get_visible())
+        col.rem.circ.set_visible(not col.rem.circ.get_visible())
+    fig.canvas.draw()
+
+
 setup = True
 fig, ax = plt.subplots()
 ax.set_xlim(0, 10)
@@ -80,13 +87,20 @@ ax.set_ylim(-3, 10)
 ax.set_aspect(1)
 cols = []
 
-for i in range(1, 5):
+ax_play = plt.axes([0.7, 0.1, 0.1, 0.075])
+ax_go = plt.axes([0.59, 0.1, 0.1, 0.075])
+ax_undo = plt.axes([0.48, 0.1, 0.1, 0.075])
+btn_play = mpl.widgets.Button(ax_play, 'Start\nplaying')
+btn_go = mpl.widgets.Button(ax_go, 'Go!')
+btn_undo = mpl.widgets.Button(ax_undo, 'Reset\nmove')
+btn_play.on_clicked(start_game)
+
+for i in range(1, 8):
     col = Column(i)
 
-    for k in range(1, 4):
-        # c = mpl.patches.Circle([i, k], radius=0.5)
-        # ax.add_artist(c)
-        col.add_circle()
+    if i <= 4:
+        for k in range(6):
+            col.add_circle()
     cols.append(col)
 
 plt.show()
