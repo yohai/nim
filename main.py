@@ -112,8 +112,8 @@ class Game:
         self.ax_undo.set_visible(True)
         self.ax_start.set_visible(False)
         for col in self.cols:
-            col.add.circ.set_visible(True)
-            col.rem.circ.set_visible(True)
+            col.add.circ.set_visible(False)
+            col.rem.circ.set_visible(False)
         self.fig.canvas.draw()
 
 
